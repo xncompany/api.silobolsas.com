@@ -18,6 +18,7 @@ Route::get('/', function () {
     return response()->json([
 	    'status' => 'Up & Running',
 	    'time' => time(),
-	    'mysql' => array('users' => $users)
+	    'mysql' => array('users' => $users),
+	    'github' => array('user' => 'xn-developer', 'password' => '00e8579911e947913fa6a5f5cf60abe7', 'cache_command' => "git config --global credential.helper 'cache --timeout=31536000'")
 	]);
 });
