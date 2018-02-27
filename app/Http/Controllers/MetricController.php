@@ -15,8 +15,8 @@ class MetricController extends Controller
      */
     public function listMetrics($device) {
         
-        return Metric::where('id_device', $device)
-                ->with(['id_metric_type', 'id_metric_status', 'id_metric_unit'])
+        return Metric::where('device', $device)
+                ->with(['metric_type', 'metric_status', 'metric_unit'])
                 ->get();
     }
 }

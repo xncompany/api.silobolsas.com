@@ -10,8 +10,8 @@ class Land extends Model
         'active'   => 'boolean'
     ];
     
-    public function id_user()
+    public function user()
     {
-        return $this->hasOne('App\User', 'id', 'id_user');
+        return $this->hasOne('App\User', 'id', 'user');
     }
 }

@@ -15,10 +15,10 @@ class LandController extends Controller
      */
     public function listLands(Request $request) {
         
-        $land = Land::with(['id_user']);
+        $land = Land::with(['user']);
         
         if ($request->has('user')) {
-            $land = $land->where('id_user', $request->get('user'));
+            $land = $land->where('user', $request->get('user'));
         } 
         
         return $land->get();

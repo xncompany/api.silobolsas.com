@@ -15,6 +15,6 @@ class SilobagController extends Controller
      */
     public function listSilobags($land) {
         
-        return Silobag::where('id_land', $land)->get();
+        return Silobag::where('land', $land)->get();
     }
 }
