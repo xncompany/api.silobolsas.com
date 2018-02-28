@@ -6,13 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Land extends Model
 {
+    const UPDATED_AT = null;
+    
     protected $casts = [
         'active'   => 'boolean'
     ];
     
     protected $fillable = ['user', 'description', 'active'];
-
-    const UPDATED_AT = null;
     
     public function user()
     {

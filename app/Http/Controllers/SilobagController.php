@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use App\Silobag;
 
 class SilobagController extends Controller
@@ -27,5 +29,25 @@ class SilobagController extends Controller
     public function getSilobag($silobag) {
         
         return Silobag::where('id', $silobag)->first();
+    }
+    
+    /**
+     * Update a silo bag
+     *
+     * @param  int  $silobag
+     * @return Response
+     */
+    public function updateSilobag($silobag, Request $request) {
+        
+        $request->validate(['land' => 'required|numeric|max:20']);
+        
+        $update = Silobag::where('id', $silobag)
+                ->update(['land' => $request->get('land')]);
+        
+        if (! $update) {
+            return new JsonResponse(null, 400);
+        } 
+        
+        return new JsonResponse();
     }
 }
