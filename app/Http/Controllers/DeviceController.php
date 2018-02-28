@@ -17,4 +17,15 @@ class DeviceController extends Controller
         
         return Device::where('silobag', $silobag)->with(['type'])->get();
     }
+    
+    /**
+     * Get device.
+     *
+     * @param  int  $device
+     * @return Response
+     */
+    public function getDevice($device) {
+        
+        return Device::where('id', $device)->with(['type'])->first();
+    }
 }

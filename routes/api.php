@@ -22,3 +22,4 @@ Route::get('/lands/{id_land}/silobags', 'SilobagController@listSilobags');
 Route::get('/silobags/{id_silobag}/devices', 'DeviceController@listDevices');
 Route::get('/silobags/{id_silobag}', 'SilobagController@getSilobag');
 Route::get('/devices/{id_device}/metrics', 'MetricController@listMetrics');
+Route::get('/devices/{id_device}', 'DeviceController@getDevice');
