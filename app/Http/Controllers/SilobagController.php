@@ -17,4 +17,15 @@ class SilobagController extends Controller
         
         return Silobag::where('land', $land)->get();
     }
+    
+    /**
+     * Get silo bag
+     *
+     * @param  int  $silobag
+     * @return Response
+     */
+    public function getSilobag($silobag) {
+        
+        return Silobag::where('id', $silobag)->first();
+    }
 }
