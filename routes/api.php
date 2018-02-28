@@ -18,6 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('/lands', 'LandController@listLands');
+Route::post('/lands', 'LandController@createLand');
 Route::get('/lands/{id_land}/silobags', 'SilobagController@listSilobags');
 Route::get('/silobags/{id_silobag}/devices', 'DeviceController@listDevices');
 Route::get('/silobags/{id_silobag}', 'SilobagController@getSilobag');

@@ -23,4 +23,20 @@ class LandController extends Controller
         
         return $land->get();
     }
+    
+    /**
+     * Create land.
+     *
+     * @return Response
+     */
+    public function createLand(Request $request) {
+        
+        $request->validate([
+            'user' => 'required|numeric|max:20',
+            'description' => 'required|string|max:128',
+            'active' => 'required|boolean'
+        ]);
+        
+        return Land::create($request->all());
+    }
 }

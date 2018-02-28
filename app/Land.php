@@ -10,6 +10,10 @@ class Land extends Model
         'active'   => 'boolean'
     ];
     
+    protected $fillable = ['user', 'description', 'active'];
+
+    const UPDATED_AT = null;
+    
     public function user()
     {
         return $this->hasOne('App\User', 'id', 'user');
