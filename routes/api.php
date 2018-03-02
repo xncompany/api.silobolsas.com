@@ -26,3 +26,4 @@ Route::put('/silobags/{id_silobag}', 'SilobagController@updateSilobag');
 Route::get('/silobags/{id_silobag}/devices', 'DeviceController@listDevices');
 Route::get('/devices/{id_device}/metrics', 'MetricController@listMetrics');
 Route::get('/devices/{id_device}', 'DeviceController@getDevice');
+Route::put('/devices/{id_device}', 'DeviceController@updateDevice');
