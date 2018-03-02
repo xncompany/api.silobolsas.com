@@ -12,5 +12,5 @@ class Silobag extends Model
         'active'   => 'boolean'
     ];
     
-    protected $fillable = ['land'];
+    protected $fillable = ['land', 'description', 'active'];
 }

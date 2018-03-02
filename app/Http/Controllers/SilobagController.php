@@ -50,4 +50,19 @@ class SilobagController extends Controller
         
         return new JsonResponse();
     }
+    
+    /**
+     * Create a silo bag
+     *
+     * @return Response
+     */
+    public function createSilobag(Request $request) {
+        
+        $request->validate([
+            'description' => 'required|string|max:128',
+            'active' => 'required|boolean'
+        ]);
+        
+        return Silobag::create($request->all());
+    }
 }
