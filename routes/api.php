@@ -29,3 +29,4 @@ Route::get('/devices/{id_device}', 'DeviceController@getDevice');
 Route::put('/devices/{id_device}', 'DeviceController@updateDevice');
 Route::get('/devices/{id_device}/alerts', 'AlertController@listAlerts');
 Route::post('/alerts', 'AlertController@createAlert');
+Route::put('/alerts/{id_alert}', 'AlertController@updateAlert');

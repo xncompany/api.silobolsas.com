@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use App\Alert;
 
 class AlertController extends Controller
@@ -36,5 +37,29 @@ class AlertController extends Controller
         ]);
         
         return Alert::create($request->all());
+    }
+    
+    /**
+     * Update an alert
+     *
+     * @param  int  $alert
+     * @return Response
+     */
+    public function updateAlert($alert, Request $request) {
+        
+        $request->validate([
+            'metric' => 'numeric|max:10',
+            'min_amount' => 'numeric',
+            'max_amount' => 'numeric'
+        ]);
+        
+        $update = Alert::where('id', $alert)
+                ->update($request->only('metric', 'min_amount', 'max_amount'));
+        
+        if (! $update) {
+            return new JsonResponse(null, 400);
+        } 
+        
+        return new JsonResponse();
     }
 }
