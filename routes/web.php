@@ -10,6 +10,7 @@ Route::get('/users/{id_user}/lands', 'UserController@listLands');
 Route::get('/lands', 'LandController@listLands');
 Route::post('/lands', 'LandController@createLand');
 Route::get('/lands/{id_land}/silobags', 'SilobagController@listSilobags');
+Route::delete('/lands/{id_land}', 'LandController@delete');
 
 // ======= Silobags
 
