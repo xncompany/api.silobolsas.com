@@ -28,7 +28,7 @@ class UserController extends Controller
      * @return Response
      */
     public function listLands($idUser) {
-        return Land::where('user', $idUser)->get();
+        return Land::where('user', $idUser)->where('active', 1)->get();
     }
 
 }
