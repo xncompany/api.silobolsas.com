@@ -46,7 +46,13 @@ class LandController extends Controller
      * @return Response
      */
     public function delete($id) {
-        // TO-DO update $id setting active=0
-        return "success";
+
+        $update = Land::where('id', $id)->update(['active' => 0]);
+
+        if (!$update) {
+            return new JsonResponse(null, 400);
+        } 
+
+        return new JsonResponse();
     }
 }

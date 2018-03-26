@@ -65,4 +65,20 @@ class SilobagController extends Controller
         
         return Silobag::create($request->all());
     }
+
+    /**
+     * Delete Silobag.
+     *
+     * @return Response
+     */
+    public function delete($id) {
+
+        $update = Silobag::where('id', $id)->update(['active' => 0]);
+
+        if (!$update) {
+            return new JsonResponse(null, 400);
+        } 
+
+        return new JsonResponse();
+    }
 }

@@ -18,6 +18,7 @@ Route::post('/silobags', 'SilobagController@createSilobag');
 Route::get('/silobags/{id_silobag}', 'SilobagController@getSilobag');
 Route::put('/silobags/{id_silobag}', 'SilobagController@updateSilobag');
 Route::get('/silobags/{id_silobag}/devices', 'DeviceController@listDevices');
+Route::delete('/silobags/{id_silobag}', 'SilobagController@delete');
 
 // ======= Devices
 
