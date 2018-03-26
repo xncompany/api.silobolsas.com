@@ -17,7 +17,27 @@ class DeviceController extends Controller
      */
     public function listDevices($silobag) {
         
-        return Device::where('silobag', $silobag)->with(['type'])->get();
+        return Device::where('silobag', $silobag)->where('active', 1)->with(['type'])->get();
+    }
+
+    /**
+     * Create Device.
+     *
+     * @return Response
+     */
+    public function create(Request $request) {
+
+
+        // revisar: esta validación está fallando.
+        $request->validate([
+            'less_id' => 'required|numeric|max:40',
+            'silobag' => 'required|numeric|max:20',
+            'type' => 'required|numeric|max:20',
+            'description' => 'required|string|max:128',
+            'active' => 'required|boolean'
+        ]);
+
+        return Device::create($request->all());
     }
     
     /**
@@ -48,6 +68,22 @@ class DeviceController extends Controller
             return new JsonResponse(null, 400);
         } 
         
+        return new JsonResponse();
+    }
+
+    /**
+     * Delete Device.
+     *
+     * @return Response
+     */
+    public function delete($id) {
+
+        $update = Device::where('id', $id)->update(['active' => 0]);
+
+        if (!$update) {
+            return new JsonResponse(null, 400);
+        } 
+
         return new JsonResponse();
     }
 }

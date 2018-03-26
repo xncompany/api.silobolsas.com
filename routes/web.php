@@ -26,6 +26,8 @@ Route::get('/devices/{id_device}/metrics', 'MetricController@listMetrics');
 Route::get('/devices/{id_device}', 'DeviceController@getDevice');
 Route::put('/devices/{id_device}', 'DeviceController@updateDevice');
 Route::get('/devices/{id_device}/alerts', 'AlertController@listAlerts');
+Route::delete('/devices/{id_device}', 'DeviceController@delete');
+Route::post('/devices', 'DeviceController@create');
 
 // ======= Alerts
 
