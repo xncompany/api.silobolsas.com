@@ -18,4 +18,9 @@ class Device extends Model
     {
         return $this->hasOne('App\DeviceType', 'id', 'type');
     }
+    
+    public function attributes()
+    {
+        return $this->hasMany('App\DeviceAttributeValue', 'device');
+    }
 }

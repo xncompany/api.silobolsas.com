@@ -17,7 +17,10 @@ class DeviceController extends Controller
      */
     public function listDevices($silobag) {
         
-        return Device::where('silobag', $silobag)->where('active', 1)->with(['type'])->get();
+        return Device::where('silobag', $silobag)
+                ->where('active', 1)
+                ->with(['type', 'attributes', 'attributes.device_attribute'])
+                ->get();
     }
 
     /**
@@ -48,7 +51,9 @@ class DeviceController extends Controller
      */
     public function getDevice($device) {
         
-        return Device::where('id', $device)->with(['type'])->first();
+        return Device::where('id', $device)
+                ->with(['type', 'attributes', 'attributes.device_attribute'])
+                ->first();
     }
     
     /**
