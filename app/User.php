@@ -9,6 +9,8 @@ class User extends Authenticatable
 {
     use Notifiable;
 
+    const UPDATED_AT = null;
+    
     protected $casts = [
         'active'   => 'boolean'
     ];
@@ -19,7 +21,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'active', 'user_type'
     ];
 
     /**
@@ -30,4 +32,9 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+    
+    public function user_type()
+    {
+        return $this->hasOne('App\UserType', 'id');
+    }
 }

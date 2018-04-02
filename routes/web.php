@@ -3,7 +3,7 @@
 // ======= Users
 
 Route::get('/users/{id_user}', 'UserController@getById');
-Route::get('/users/{id_user}/lands', 'UserController@listLands');
+Route::post('/users', 'UserController@create');
 
 // ======= Lands
 
