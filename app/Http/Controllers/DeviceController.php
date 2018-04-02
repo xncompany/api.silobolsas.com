@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Device;
+use App\DeviceAttribute;
+use App\DeviceAttributeValue;
 
 class DeviceController extends Controller
 {
@@ -35,10 +37,28 @@ class DeviceController extends Controller
             'silobag' => 'required|numeric|digits_between:1,20',
             'type' => 'required|numeric|digits_between:1,20',
             'description' => 'required|string|max:128',
-            'active' => 'required|boolean'
+            'active' => 'required|boolean',
+            'attributes' => 'json'
         ]);
 
-        return Device::create($request->all());
+        $device = Device::create($request->all());
+        
+        if ($request->has('attributes')) {
+            
+            $attributes = json_decode($request->get('attributes'), true);
+            
+            foreach ($attributes as $attributeName => $attributeValue) {
+                
+                $deviceAttribute = DeviceAttribute::firstOrCreate(['description' => $attributeName]);
+                DeviceAttributeValue::create([
+                    'device' => $device->id,
+                    'device_attribute' => $deviceAttribute->id,
+                    'description' => $attributeValue
+                ]);
+            }
+        }
+        
+        return $device;
     }
     
     /**
