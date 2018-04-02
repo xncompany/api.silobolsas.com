@@ -32,7 +32,7 @@ class LandController extends Controller
     public function createLand(Request $request) {
 
         $request->validate([
-            'user' => 'required|numeric|max:20',
+            'user' => 'required|numeric|digits_between:1,20',
             'description' => 'required|string|max:128',
             'active' => 'required|boolean'
         ]);

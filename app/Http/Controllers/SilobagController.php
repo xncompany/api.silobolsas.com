@@ -39,7 +39,7 @@ class SilobagController extends Controller
      */
     public function updateSilobag($silobag, Request $request) {
         
-        $request->validate(['land' => 'required|numeric|max:20']);
+        $request->validate(['land' => 'required|numeric|digits_between:1,20']);
         
         $update = Silobag::where('id', $silobag)
                 ->update(['land' => $request->get('land')]);

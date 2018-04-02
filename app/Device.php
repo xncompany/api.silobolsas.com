@@ -12,7 +12,7 @@ class Device extends Model
         'active'   => 'boolean'
     ];
     
-    protected $fillable = ['silobag'];
+    protected $fillable = ['less_id', 'silobag', 'description', 'type', 'active'];
     
     public function type()
     {

@@ -30,12 +30,10 @@ class DeviceController extends Controller
      */
     public function create(Request $request) {
 
-
-        // revisar: esta validación está fallando.
         $request->validate([
-            'less_id' => 'required|numeric|max:40',
-            'silobag' => 'required|numeric|max:20',
-            'type' => 'required|numeric|max:20',
+            'less_id' => 'required|numeric|digits_between:1,20',
+            'silobag' => 'required|numeric|digits_between:1,20',
+            'type' => 'required|numeric|digits_between:1,20',
             'description' => 'required|string|max:128',
             'active' => 'required|boolean'
         ]);
@@ -64,7 +62,7 @@ class DeviceController extends Controller
      */
     public function updateDevice($device, Request $request) {
         
-        $request->validate(['silobag' => 'required|numeric|max:20']);
+        $request->validate(['silobag' => 'required|numeric|digits_between:1,20']);
         
         $update = Device::where('id', $device)
                 ->update(['silobag' => $request->get('silobag')]);

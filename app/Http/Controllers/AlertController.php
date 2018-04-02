@@ -31,7 +31,7 @@ class AlertController extends Controller
     public function createAlert(Request $request) {
        
         $request->validate([
-            'metric' => 'required|numeric|max:10',
+            'metric' => 'required|numeric|digits_between:1,10',
             'min_amount' => 'required|numeric',
             'max_amount' => 'required|numeric'
         ]);
@@ -48,7 +48,7 @@ class AlertController extends Controller
     public function updateAlert($alert, Request $request) {
         
         $request->validate([
-            'metric' => 'numeric|max:10',
+            'metric' => 'numeric|digits_between:1,10',
             'min_amount' => 'numeric',
             'max_amount' => 'numeric'
         ]);
