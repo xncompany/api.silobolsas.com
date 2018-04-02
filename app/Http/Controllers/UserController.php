@@ -18,7 +18,9 @@ class UserController extends Controller
      */
     public function getById($id) {
         
-        return User::where('id', $id)->with(['user_type'])->first();
+        return User::where('id', $id)
+                ->with(['user_type', 'attributes', 'attributes.user_attribute'])
+                ->first();
     }
     
     /**

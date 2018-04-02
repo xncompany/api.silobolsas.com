@@ -37,4 +37,9 @@ class User extends Authenticatable
     {
         return $this->hasOne('App\UserType', 'id');
     }
+    
+    public function attributes()
+    {
+        return $this->hasMany('App\UserAttributeValue', 'user');
+    }
 }
