@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use App\Land;
 
 class LandController extends Controller
@@ -18,7 +19,7 @@ class LandController extends Controller
         $land = Land::with(['user']);
         
         if ($request->has('user')) {
-            $land = $land->where('user', $request->get('user'));
+            $land = $land->where('user', $request->get('user'))->where('active', 1);
         } 
         
         return $land->get();
