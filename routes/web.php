@@ -33,3 +33,7 @@ Route::post('/devices', 'DeviceController@create');
 
 Route::post('/alerts', 'AlertController@createAlert');
 Route::put('/alerts/{id_alert}', 'AlertController@updateAlert');
+
+// ======= Dashboard
+
+Route::get('/dashboard', 'DashboardController@list');
