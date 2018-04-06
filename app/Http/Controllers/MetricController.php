@@ -17,6 +17,7 @@ class MetricController extends Controller
         
         return Metric::where('device', $device)
                 ->with(['metric_type', 'metric_status', 'metric_unit'])
+                ->orderBy('created_at', 'desc')
                 ->get();
     }
 }
