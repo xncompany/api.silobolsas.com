@@ -19,6 +19,6 @@ class UserAttributeValue extends Model
     
     public function user_attribute()
     {
-        return $this->belongsTo('App\Http\Models\UserAttribute', 'id');
+        return $this->belongsTo('App\Http\Models\UserAttribute', 'user_attribute');
     }
 }

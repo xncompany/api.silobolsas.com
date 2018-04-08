@@ -25,6 +25,9 @@ class OrganizationsController extends Controller
      * @return Response
      */
     public function users($id) {
-        return User::where('organization', $id)->where('active', 1)->get();
+        return User::where('organization', $id)
+                ->with(['user_type', 'attributes', 'attributes.user_attribute', 'organization'])
+                ->where('active', 1)
+                ->get();
     }
 }
