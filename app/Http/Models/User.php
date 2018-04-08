@@ -21,7 +21,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'active', 'user_type'
+        'name', 'email', 'password', 'active', 'user_type', 'organization'
     ];
 
     /**
@@ -36,6 +36,11 @@ class User extends Authenticatable
     public function user_type()
     {
         return $this->hasOne('App\Http\Models\UserType', 'id');
+    }
+
+    public function organization()
+    {
+        return $this->hasOne('App\Http\Models\Organization', 'id');
     }
     
     public function attributes()
