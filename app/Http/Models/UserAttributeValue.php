@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Http\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -14,11 +14,11 @@ class UserAttributeValue extends Model
     
     public function user()
     {
-        return $this->belongsTo('App\User', 'id');
+        return $this->belongsTo('App\Http\Models\User', 'id');
     }
     
     public function user_attribute()
     {
-        return $this->belongsTo('App\UserAttribute', 'id');
+        return $this->belongsTo('App\Http\Models\UserAttribute', 'id');
     }
 }

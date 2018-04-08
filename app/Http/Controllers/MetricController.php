@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Metric;
+use App\Http\Models\Metric;
 
 class MetricController extends Controller
 {

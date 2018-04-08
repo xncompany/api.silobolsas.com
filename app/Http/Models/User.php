@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Http\Models;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -35,11 +35,11 @@ class User extends Authenticatable
     
     public function user_type()
     {
-        return $this->hasOne('App\UserType', 'id');
+        return $this->hasOne('App\Http\Models\UserType', 'id');
     }
     
     public function attributes()
     {
-        return $this->hasMany('App\UserAttributeValue', 'user');
+        return $this->hasMany('App\Http\Models\UserAttributeValue', 'user');
     }
 }

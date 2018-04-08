@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
-use App\Device;
-use App\DeviceAttribute;
-use App\DeviceAttributeValue;
+use App\Http\Models\Device;
+use App\Http\Models\DeviceAttribute;
+use App\Http\Models\DeviceAttributeValue;
 
 class DeviceController extends Controller
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Http\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -14,11 +14,11 @@ class DeviceAttributeValue extends Model
     
     public function device()
     {
-        return $this->belongsTo('App\Device', 'id');
+        return $this->belongsTo('App\Http\Models\Device', 'id');
     }
     
     public function device_attribute()
     {
-        return $this->belongsTo('App\DeviceAttribute', 'id');
+        return $this->belongsTo('App\Http\Models\DeviceAttribute', 'id');
     }
 }

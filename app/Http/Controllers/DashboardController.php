@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Land;
-use App\Silobag;
-use App\Device;
-use App\Metric;
+use App\Http\Models\Land;
+use App\Http\Models\Silobag;
+use App\Http\Models\Device;
+use App\Http\Models\Metric;
 
 class DashboardController extends Controller
 {

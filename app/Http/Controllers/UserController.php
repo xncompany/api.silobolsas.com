@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\User;
-use App\UserAttribute;
-use App\UserAttributeValue;
+use App\Http\Models\User;
+use App\Http\Models\UserAttribute;
+use App\Http\Models\UserAttributeValue;
 
 class UserController extends Controller
 {
