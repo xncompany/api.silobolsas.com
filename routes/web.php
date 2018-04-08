@@ -8,6 +8,7 @@ Route::get('/organizations/{id_organization}/users', 'OrganizationsController@us
 
 Route::get('/users/{id_user}', 'UserController@getById');
 Route::post('/users', 'UserController@create');
+Route::delete('/users/{id_user}', 'UserController@delete');
 
 // ======= Lands
 

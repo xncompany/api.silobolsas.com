@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use App\Http\Models\User;
 use App\Http\Models\UserAttribute;
 use App\Http\Models\UserAttributeValue;
@@ -19,6 +20,7 @@ class UserController extends Controller
     public function getById($id) {
         
         return User::where('id', $id)
+                ->where('active', 1)
                 ->with(['user_type', 'attributes', 'attributes.user_attribute', 'organization'])
                 ->first();
     }
@@ -56,5 +58,21 @@ class UserController extends Controller
         }
         
         return $user;
+    }
+
+    /**
+     * Delete User.
+     *
+     * @return Response
+     */
+    public function delete($id) {
+
+        $update = User::where('id', $id)->update(['active' => 0]);
+
+        if (!$update) {
+            return new JsonResponse(null, 400);
+        } 
+
+        return new JsonResponse();
     }
 }
