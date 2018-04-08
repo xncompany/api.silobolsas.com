@@ -1,5 +1,9 @@
 <?php
 
+// ======= Organizations
+Route::get('/organizations', 'OrganizationsController@list');
+Route::get('/organizations/{id_organization}/users', 'OrganizationsController@users');
+
 // ======= Users
 
 Route::get('/users/{id_user}', 'UserController@getById');
