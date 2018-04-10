@@ -35,16 +35,16 @@ class User extends Authenticatable
     
     public function user_type()
     {
-        return $this->hasOne('App\Http\Models\UserType', 'id');
+        return $this->hasOne('App\Http\Models\UserType', 'id', 'user_type');
     }
 
     public function organization()
     {
-        return $this->hasOne('App\Http\Models\Organization', 'id');
+        return $this->hasOne('App\Http\Models\Organization', 'id', 'organization');
     }
     
     public function attributes()
     {
-        return $this->hasMany('App\Http\Models\UserAttributeValue', 'user');
+        return $this->hasMany('App\Http\Models\UserAttributeValue', 'user', 'id');
     }
 }
