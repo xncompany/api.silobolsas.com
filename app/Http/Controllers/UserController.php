@@ -18,10 +18,10 @@ class UserController extends Controller
      * @return Response
      */
     public function getById($id) {
-        
+
         return User::where('id', $id)
-                ->where('active', 1)
                 ->with(['user_type', 'attributes', 'attributes.user_attribute', 'organization'])
+                ->where('active', 1)
                 ->first();
     }
     
@@ -36,6 +36,7 @@ class UserController extends Controller
             'email' => 'required|email|max:128',
             'password' => 'required|string|max:32',
             'user_type' => 'required|numeric|digits_between:1,10',
+            'organization' => 'required|numeric|digits_between:1,10',
             'active' => 'required|boolean',
             'attributes' => 'json'
         ]);
@@ -57,7 +58,7 @@ class UserController extends Controller
             }
         }
         
-        return $user;
+        return $this->getById($user->id);
     }
 
     /**
