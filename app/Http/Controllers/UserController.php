@@ -41,6 +41,15 @@ class UserController extends Controller
             'attributes' => 'json'
         ]);
 
+        # did already exists?
+        $user = User::where('email', $request->input('email'))
+                    ->where('active', 1)
+                    ->first();
+        
+        if (!empty($user)) {
+            return new JsonResponse("El usuario ya existe", 500);
+        }
+
         $user = User::create($request->all());
         
         if ($request->has('attributes')) {
