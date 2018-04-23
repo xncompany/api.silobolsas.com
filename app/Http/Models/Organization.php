@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Organization extends Model
 {
+	const UPDATED_AT = null;
+
     protected $casts = [
         'active'   => 'boolean'
     ];

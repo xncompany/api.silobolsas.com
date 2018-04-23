@@ -3,6 +3,8 @@
 // ======= Organizations
 Route::get('/organizations', 'OrganizationsController@list');
 Route::get('/organizations/{id_organization}/users', 'OrganizationsController@users');
+Route::post('/organizations', 'OrganizationsController@create');
+Route::delete('/organizations/{id_organization}', 'OrganizationsController@delete');
 
 // ======= Users
 
