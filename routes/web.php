@@ -6,6 +6,12 @@ Route::get('/organizations/{id_organization}/users', 'OrganizationsController@us
 Route::post('/organizations', 'OrganizationsController@create');
 Route::delete('/organizations/{id_organization}', 'OrganizationsController@delete');
 
+
+// ======= Metrics
+
+Route::get('/configurations', 'ConfigurationsController@getMetrics');
+Route::post('/configurations', 'ConfigurationsController@setMetrics');
+
 // ======= Users
 
 Route::get('/users/{id_user}', 'UserController@getById');
