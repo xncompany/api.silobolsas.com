@@ -16,10 +16,10 @@ class LandController extends Controller
      */
     public function listLands(Request $request) {
         
-        $land = Land::with(['user']);
+        $land = Land::with(['organization']);
         
-        if ($request->has('user')) {
-            $land = $land->where('user', $request->get('user'))->where('active', 1);
+        if ($request->has('organization')) {
+            $land = $land->where('organization', $request->get('organization'))->where('active', 1);
         } 
         
         return $land->get();
@@ -34,6 +34,7 @@ class LandController extends Controller
 
         $request->validate([
             'user' => 'required|numeric|digits_between:1,20',
+            'organization' => 'required|numeric|digits_between:1,20',
             'description' => 'required|string|max:128',
             'active' => 'required|boolean'
         ]);

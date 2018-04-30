@@ -12,10 +12,15 @@ class Land extends Model
         'active'   => 'boolean'
     ];
     
-    protected $fillable = ['user', 'description', 'active'];
+    protected $fillable = ['user', 'organization', 'description', 'active'];
     
     public function user()
     {
         return $this->hasOne('App\Http\Models\User', 'id', 'user');
+    }
+
+    public function organization()
+    {
+        return $this->hasOne('App\Http\Models\Organization', 'id', 'organization');
     }
 }

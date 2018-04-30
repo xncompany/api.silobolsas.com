@@ -20,52 +20,52 @@ class DashboardController extends Controller
         
         $data = array();
 
-        if ($request->has('user')) {
-            $user = $request->get('user');
-            $devices = $this->_devices($user)->get();
-            $data['counters']['lands'] = $this->_lands($user)->count();
-            $data['counters']['silobags'] = $this->_silobags($user)->count();
+        if ($request->has('organization')) {
+            $idOrganization = $request->get('organization');
+            $devices = $this->_devices($idOrganization)->get();
+            $data['counters']['lands'] = $this->_lands($idOrganization)->count();
+            $data['counters']['silobags'] = $this->_silobags($idOrganization)->count();
             $data['counters']['devices'] = count($devices);
-            $data['counters']['metrics'] = $this->_metrics($user)->count();
+            $data['counters']['metrics'] = $this->_metrics($idOrganization)->count();
             $data['devices'] = $devices;
         } 
         
         return $data;
     }
 
-    private function _lands($user) 
+    private function _lands($idOrganization) 
     {
-        return Land::where('user', $user)
+        return Land::where('organization', $idOrganization)
                     ->where('active', 1);
     }
 
-    private function _silobags($user) 
+    private function _silobags($idOrganization) 
     {
         return Silobag::join('lands', 'silobags.land', '=', 'lands.id')
-                        ->where('lands.user', $user)
+                        ->where('lands.organization', $idOrganization)
                         ->where('lands.active', 1)
                         ->where('silobags.active', 1);
     }
 
-    private function _devices($user) 
+    private function _devices($idOrganization) 
     {
         return Device::join('silobags', 'silobags.id', '=', 'devices.silobag')
                         ->join('lands', 'lands.id', '=', 'silobags.land')
                         ->select('devices.*')
                         ->with(['type', 'attributes', 'attributes.device_attribute'])
-                        ->where('lands.user', $user)
+                        ->where('lands.organization', $idOrganization)
                         ->where('lands.active', 1)
                         ->where('silobags.active', 1)
                         ->where('devices.active', 1);
     }
 
-    private function _metrics($user)
+    private function _metrics($idOrganization)
     {
         return Metric::join('devices', 'devices.id', '=', 'metrics.device')
                         ->join('silobags', 'silobags.id', '=', 'devices.silobag')
                         ->join('lands', 'lands.id', '=', 'silobags.land')
                         ->with(['type', 'attributes', 'attributes.device_attribute'])
-                        ->where('lands.user', $user)
+                        ->where('lands.organization', $idOrganization)
                         ->where('lands.active', 1)
                         ->where('silobags.active', 1)
                         ->where('devices.active', 1);
