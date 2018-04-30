@@ -15,8 +15,10 @@ Route::post('/configurations', 'ConfigurationsController@setMetrics');
 // ======= Users
 
 Route::get('/users/{id_user}', 'UserController@getById');
+Route::post('/users/{id_user}/password', 'UserController@resetPassword');
 Route::post('/users', 'UserController@create');
 Route::delete('/users/{id_user}', 'UserController@delete');
+Route::post('/login', 'UserController@getByEmailAndPassword');
 
 // ======= Lands
 

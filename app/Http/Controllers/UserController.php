@@ -24,6 +24,49 @@ class UserController extends Controller
                 ->where('active', 1)
                 ->first();
     }
+
+    /**
+     * Reset Password for given User
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function resetPassword($id, Request $request) {
+
+        $update = User::where('id', $id)->update(['password' => $request->input('password')]);
+
+        if (!$update) {
+            return new JsonResponse(null, 400);
+        } 
+
+        return new JsonResponse();
+    }
+
+
+    /**
+     * Get User for a given id
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function getByEmailAndPassword(Request $request) {
+
+        $request->validate([
+            'email' => 'required|email|max:128',
+            'password' => 'required|string|max:128'
+        ]);
+
+        $user = User::where('email', $request->input('email'))
+                    ->where('password', md5($request->input('password')))
+                    ->where('active', 1)
+                    ->first();
+
+        if (empty($user)) {
+            return new JsonResponse("El usuario no existe", 500);
+        }
+
+        return $this->getById($user->id);
+    }
     
     /**
      * Create User.
