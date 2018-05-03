@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Http\Models\Alert;
+use App\Http\Models\Metric;
 
 class AlertController extends Controller
 {

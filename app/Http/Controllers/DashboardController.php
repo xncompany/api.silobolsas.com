@@ -27,6 +27,7 @@ class DashboardController extends Controller
             $data['counters']['silobags'] = $this->_silobags($idOrganization)->count();
             $data['counters']['devices'] = count($devices);
             $data['counters']['metrics'] = $this->_metrics($idOrganization)->count();
+            $data['counters']['alerts'] = $this->_alerts($idOrganization)->count();
             $data['devices'] = $devices;
         } 
         
@@ -66,6 +67,21 @@ class DashboardController extends Controller
                         ->join('lands', 'lands.id', '=', 'silobags.land')
                         ->with(['type', 'attributes', 'attributes.device_attribute'])
                         ->where('lands.organization', $idOrganization)
+                        ->where('lands.active', 1)
+                        ->where('silobags.active', 1)
+                        ->where('devices.active', 1);
+    }
+
+    private function _alerts($idOrganization)
+    {
+        $today = date('Y-m-d H:i:s', (time() -  86400));
+        return Metric::join('devices', 'devices.id', '=', 'metrics.device')
+                        ->join('silobags', 'silobags.id', '=', 'devices.silobag')
+                        ->join('lands', 'lands.id', '=', 'silobags.land')
+                        ->with(['type', 'attributes', 'attributes.device_attribute'])
+                        ->where('lands.organization', $idOrganization)
+                        ->where('metrics.created_at', '>=', $today)
+                        ->where('metric_status', 3)
                         ->where('lands.active', 1)
                         ->where('silobags.active', 1)
                         ->where('devices.active', 1);

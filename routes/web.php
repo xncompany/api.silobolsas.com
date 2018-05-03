@@ -37,7 +37,7 @@ Route::delete('/silobags/{id_silobag}', 'SilobagController@delete');
 
 // ======= Devices
 
-Route::get('/devices/{id_device}/metrics', 'MetricController@listMetrics');
+Route::get('/devices/{id_device}/metrics', 'MetricController@device');
 Route::get('/devices/{id_device}', 'DeviceController@getDevice');
 Route::put('/devices/{id_device}', 'DeviceController@updateDevice');
 Route::get('/devices/{id_device}/alerts', 'AlertController@listAlerts');
@@ -48,6 +48,8 @@ Route::post('/devices', 'DeviceController@create');
 
 Route::post('/alerts', 'AlertController@createAlert');
 Route::put('/alerts/{id_alert}', 'AlertController@updateAlert');
+Route::get('/alerts/{id_organization}', 'MetricController@alerts');
+Route::get('/metrics/{id_organization}', 'MetricController@all');
 
 // ======= Dashboard
 

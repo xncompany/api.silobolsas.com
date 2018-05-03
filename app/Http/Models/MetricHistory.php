@@ -4,13 +4,10 @@ namespace App\Http\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Metric extends Model
+class MetricHistory extends Model
 {
-    public function device()
-    {
-        return $this->hasOne('App\Http\Models\Device', 'id', 'device');
-    }
-
+    protected $table = 'metrics_history';
+    
     public function metric_type()
     {
         return $this->hasOne('App\Http\Models\MetricType', 'id', 'metric_type');
