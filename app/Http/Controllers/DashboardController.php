@@ -8,6 +8,7 @@ use App\Http\Models\Land;
 use App\Http\Models\Silobag;
 use App\Http\Models\Device;
 use App\Http\Models\Metric;
+use App\Http\Models\MetricHistory;
 
 class DashboardController extends Controller
 {
@@ -75,12 +76,12 @@ class DashboardController extends Controller
     private function _alerts($idOrganization)
     {
         $today = date('Y-m-d H:i:s', (time() -  86400));
-        return Metric::join('devices', 'devices.id', '=', 'metrics.device')
+        return MetricHistory::join('devices', 'devices.id', '=', 'metrics_history.device')
                         ->join('silobags', 'silobags.id', '=', 'devices.silobag')
                         ->join('lands', 'lands.id', '=', 'silobags.land')
                         ->with(['type', 'attributes', 'attributes.device_attribute'])
                         ->where('lands.organization', $idOrganization)
-                        ->where('metrics.created_at', '>=', $today)
+                        ->where('metrics_history.created_at', '>=', $today)
                         ->where('metric_status', 3)
                         ->where('lands.active', 1)
                         ->where('silobags.active', 1)
