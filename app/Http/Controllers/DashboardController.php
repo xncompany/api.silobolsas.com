@@ -21,15 +21,33 @@ class DashboardController extends Controller
         
         $data = array();
 
-        if ($request->has('organization')) {
+        if ($request->has('organization')) 
+        {
             $idOrganization = $request->get('organization');
             $devices = $this->_devices($idOrganization)->get();
+            $silobags = $this->_silobags($idOrganization)->get();
+            $alerts = $this->_alerts($idOrganization)->get();
+
+            foreach ($alerts as $alert) {
+                if ($alert->metric_status == 3) 
+                {
+                    foreach ($silobags as &$silobag) 
+                    {
+                        if ($silobag->id == $alert->silobag) {
+                            $silobag->alarm = 1;
+                        }
+                    }
+                }
+            }
+
             $data['counters']['lands'] = $this->_lands($idOrganization)->count();
-            $data['counters']['silobags'] = $this->_silobags($idOrganization)->count();
+            $data['counters']['silobags'] = count($silobags);
             $data['counters']['devices'] = count($devices);
             $data['counters']['metrics'] = $this->_metrics($idOrganization)->count();
-            $data['counters']['alerts'] = $this->_alerts($idOrganization)->count();
+            $data['counters']['alerts'] = count($alerts);
             $data['devices'] = $devices;
+            $data['silobags'] = $silobags;
+            $data['alerts'] = $alerts;
         } 
         
         return $data;
@@ -44,9 +62,11 @@ class DashboardController extends Controller
     private function _silobags($idOrganization) 
     {
         return Silobag::join('lands', 'silobags.land', '=', 'lands.id')
+                        ->select('silobags.*', 'lands.description as land', 'lands.id as idLand')
                         ->where('lands.organization', $idOrganization)
                         ->where('lands.active', 1)
-                        ->where('silobags.active', 1);
+                        ->where('silobags.active', 1)
+                        ->orderBy('lands.id');
     }
 
     private function _devices($idOrganization) 
@@ -79,7 +99,6 @@ class DashboardController extends Controller
         return Metric::join('devices', 'devices.id', '=', 'metrics.device')
                         ->join('silobags', 'silobags.id', '=', 'devices.silobag')
                         ->join('lands', 'lands.id', '=', 'silobags.land')
-                        ->with(['type', 'attributes', 'attributes.device_attribute'])
                         ->where('lands.organization', $idOrganization)
                         ->where('metrics.created_at', '>=', $today)
                         ->where('metric_status', 3)
