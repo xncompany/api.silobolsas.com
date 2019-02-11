@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Http\Models\User;
+use App\Http\Models\UserLand;
 use App\Http\Models\UserAttribute;
 use App\Http\Models\UserAttributeValue;
 
@@ -109,6 +110,14 @@ class UserController extends Controller
                 ]);
             }
         }
+
+
+        if ($request->has('user_lands')) {
+            foreach ($request->get('user_lands') as $id_land) {
+                UserLand::create(['user' => $user->id, 'land' => $id_land]);
+            }
+        }
+
         
         return $this->getById($user->id);
     }

@@ -6,15 +6,39 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Http\Models\Land;
+use App\Http\Models\UserLand;
 
 class LandController extends Controller
 {
+    /**
+     * List third-party lands.
+     *
+     * @return Response
+     */
+    public function listThirdPartyLands(Request $request) {
+        
+        $list = UserLand::where('user', $request->get('user'))
+               ->get();
+
+        $lands = array();
+        foreach ($list as $item) {
+            $lands[] = Land::with(['organization'])->where('id', $item['land'])->first();
+        }
+        
+        return $lands;
+    }
+
     /**
      * List lands.
      *
      * @return Response
      */
-    public function listLands(Request $request) {
+    public function listLands(Request $request) 
+    {
+
+        if ($request->has('user')) {
+            return $this->listThirdPartyLands($request);
+        }
         
         $land = Land::with(['organization']);
         
@@ -22,7 +46,7 @@ class LandController extends Controller
             $land = $land->where('organization', $request->get('organization'))->where('active', 1);
         } 
         
-        return $land->get();
+        return $land->orderBy('organization')->get();
     }
     
     /**
