@@ -88,18 +88,21 @@ class SilobagController extends Controller
      *
      * @return Response
      */
-    public function chart($id, $days, $unit) {
+    public function chart($id, $unit) 
+    {
 
-        $days++;
+        $start = request()->input('start');
+        $end = request()->input('end');
 
-        $query = "SELECT a.id, a.less_id, AVG(a.amount) AS 'amount', DATE_FORMAT(CONCAT(a.month, '-01 00:00:00'), '%b') AS 'date', a.month FROM (SELECT d.id, d.less_id, m.amount, m.created_at, DATE_FORMAT(m.created_at, '%Y-%m') as 'month' from metrics_history m inner join devices d on d.id = m.device where d.silobag = $id and m.metric_type = $unit and  m.created_at >= SUBDATE(NOW(), $days)) a GROUP BY a.id, a.less_id, a.month ORDER BY a.id, month";
-
-        if ($days < 30) 
-        {
-            $query = "SELECT a.id, a.less_id, AVG(a.amount) AS 'amount', DATE_FORMAT(CONCAT(a.month, ' 00:00:00'), '%D') AS 'date', a.month FROM (SELECT d.id, d.less_id, m.amount, m.created_at, DATE_FORMAT(m.created_at, '%Y-%m-%d') as 'month' from metrics_history m inner join devices d on d.id = m.device where d.silobag = $id and m.metric_type = $unit and  m.created_at >= SUBDATE(NOW(), $days)) a GROUP BY a.id, a.less_id, a.month ORDER BY a.id, month";
+        if (request()->input('start') == "0") {
+            $start = date('m/d/Y');
+            $end = date('m/d/Y', time() - (365 * 24 * 60 * 60));
         }
 
+        list($mStart, $dStart, $yStart) = explode('/', $start);
+        list($mEnd, $dEnd, $yEnd) = explode('/', $end);
 
+        $query = "SELECT a.id, a.less_id, AVG(a.amount) AS 'amount', DATE_FORMAT(CONCAT(a.month, '-01 00:00:00'), '%b') AS 'date', a.month FROM (SELECT d.id, d.less_id, m.amount, m.created_at, DATE_FORMAT(m.created_at, '%Y-%m') as 'month' from metrics_history m inner join devices d on d.id = m.device where d.silobag = $id and m.metric_type = $unit and  m.created_at >= '$yEnd-$mEnd-$dEnd' AND m.created_at <= '$yStart-$mStart-$dStart') a GROUP BY a.id, a.less_id, a.month ORDER BY a.id, month;";
 
         $results = DB::select($query);
 

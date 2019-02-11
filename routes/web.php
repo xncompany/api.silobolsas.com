@@ -34,7 +34,7 @@ Route::get('/silobags/{id_silobag}', 'SilobagController@getSilobag');
 Route::put('/silobags/{id_silobag}', 'SilobagController@updateSilobag');
 Route::get('/silobags/{id_silobag}/devices', 'DeviceController@listDevices');
 Route::delete('/silobags/{id_silobag}', 'SilobagController@delete');
-Route::get('/silobags/{id_silobag}/chart/{days}/unit/{unit}', 'SilobagController@chart');
+Route::get('/silobags/{id_silobag}/chart/{unit}', 'SilobagController@chart');
 
 // ======= Devices
 
