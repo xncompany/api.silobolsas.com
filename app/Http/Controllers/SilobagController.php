@@ -102,7 +102,26 @@ class SilobagController extends Controller
         list($mStart, $dStart, $yStart) = explode('/', $start);
         list($mEnd, $dEnd, $yEnd) = explode('/', $end);
 
-        $query = "SELECT a.id, a.less_id, AVG(a.amount) AS 'amount', DATE_FORMAT(CONCAT(a.month, '-01 00:00:00'), '%b') AS 'date', a.month FROM (SELECT d.id, d.less_id, m.amount, m.created_at, DATE_FORMAT(m.created_at, '%Y-%m') as 'month' from metrics_history m inner join devices d on d.id = m.device where d.silobag = $id and m.metric_type = $unit and  m.created_at >= '$yStart-$mStart-$dStart' AND m.created_at <= '$yEnd-$mEnd-$dEnd') a GROUP BY a.id, a.less_id, a.month ORDER BY a.id, month;";
+        // going through days
+        $unixStart = mktime(0, 0, 0, $mStart, $dStart, $yStart);
+        $unixEnd = mktime(0, 0, 0, $mEnd, $dEnd, $yEnd);
+
+        $sameMonth = ($mStart == $mEnd && $yStart == $yEnd);
+        $diffDays = intval(($unixEnd - $unixStart) / 60 / 60 / 24);
+
+
+        if ($diffDays < 15 ) {
+
+            $query = "SELECT a.id, a.less_id, AVG(a.amount) AS 'amount', DATE_FORMAT(CONCAT(a.month, ' 00:00:00'), '%d') AS 'date', a.month FROM (SELECT d.id, d.less_id, m.amount, m.created_at, DATE_FORMAT(m.created_at, '%Y-%m-%d') as 'month' from metrics_history m inner join devices d on d.id = m.device where d.silobag = $id and m.metric_type = $unit and  m.created_at >= '$yStart-$mStart-$dStart' AND m.created_at <= '$yEnd-$mEnd-$dEnd') a GROUP BY a.id, a.less_id, a.month ORDER BY a.id, month;";
+
+        } else if ($diffDays >= 15 && $diffDays < 60) {
+
+            $query = "SELECT a.id, a.less_id, AVG(a.amount) AS 'amount', CONCAT('s', a.month) AS 'date', a.month FROM (SELECT d.id, d.less_id, m.amount, m.created_at, DATE_FORMAT(m.created_at, '%u') as 'month' from metrics_history m inner join devices d on d.id = m.device where d.silobag = $id and m.metric_type = $unit and  m.created_at >= '$yStart-$mStart-$dStart' AND m.created_at <= '$yEnd-$mEnd-$dEnd') a GROUP BY a.id, a.less_id, a.month ORDER BY a.id, month;";
+
+        } else {
+            
+            $query = "SELECT a.id, a.less_id, AVG(a.amount) AS 'amount', DATE_FORMAT(CONCAT(a.month, '-01 00:00:00'), '%b') AS 'date', a.month FROM (SELECT d.id, d.less_id, m.amount, m.created_at, DATE_FORMAT(m.created_at, '%Y-%m') as 'month' from metrics_history m inner join devices d on d.id = m.device where d.silobag = $id and m.metric_type = $unit and  m.created_at >= '$yStart-$mStart-$dStart' AND m.created_at <= '$yEnd-$mEnd-$dEnd') a GROUP BY a.id, a.less_id, a.month ORDER BY a.id, month;";
+        }
 
         $results = DB::select($query);
 
